@@ -1,0 +1,31 @@
+
+#header
+{
+background: #fff !important;
+height: 140px;
+display: block;
+}
+.logo
+{
+margin: 5px;
+float: left;
+}
+ul#toplinks
+{
+float: right;
+color: #999;
+margin: 0;
+padding: 0;
+list-style: none;
+}
+#logo_text{
+float: left;
+width: 500px;
+margin: 5px 0 0 0;
+color:blue;
+}
+h3{font-size: 18px}
+
+.error{
+	color:red;
+}

@@ -1,0 +1,13 @@
+
+#msform fieldset:not(:first-of-type) {
+    display: none
+}
+
+input[type=radio] {
+    width: 18px;
+    height: 18px;
+}
+
+.options{
+	font-size: 18px;
+}
