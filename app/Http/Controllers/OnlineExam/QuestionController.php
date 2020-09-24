@@ -26,7 +26,8 @@ class QuestionController extends Controller
     }
 
     public function add(Request $request){
-    	//dd(isset($request->is_entry[1]));
+        //Validation Task Is Remaining
+    	//dd($request);
     	if($request->question){
     		foreach($request->question as $key=>$question){
                 $data = array();
@@ -55,7 +56,13 @@ class QuestionController extends Controller
                     break;
                 }
             }
-            return 'Submission Successful';
+            if($succ){
+                $request->session()->flash('success','Question Submission Successful');
+            }else{
+                $request->session()->flash('error','Problem in Adding Question');
+            }
+
+            return redirect()->back();
     	}
     }
 
@@ -126,13 +133,12 @@ class QuestionController extends Controller
             $subject_id = $request->id;
             $questions = $this->question->where('subject_id',$request->id)->get();
             if(!$questions->isEmpty()){
-                $exam = $this->exam->orderBy('id', 'DESC')->get();  //Try to get Exam Data Having Active Status
-                //dd($exam);
-                return view('admin.question.finalqn')->with(compact('questions','exam','subject_id'));
+                  
+                return view('admin.question.finalqn')->with(compact('questions','subject_id'));
             }else{
-                $exam= null;
+                
                 \Session::flash('error','No Questions Are Available For This Subject');
-                return view('admin.question.finalqn')->with('exam',$exam);
+                return view('admin.question.finalqn');
             }
         }else{
             return 'ERROR. In Request';
@@ -145,8 +151,8 @@ class QuestionController extends Controller
             return redirect()->back();
         }
         
-
-        $subjcheck = $this->relation->where('subject_id',$request->subject_id)->where('exam_id',$request->exam_id)->first();
+        //dd($request);
+        $subjcheck = $this->relation->where('sub_id',$request->subject_id)->where('exam_id',$request->exam_id)->first();
         if($subjcheck != null){
             \Session::flash('error','Question For The Selected Subject or Exam Is Already Finalized');
             return redirect()->back();
@@ -157,11 +163,16 @@ class QuestionController extends Controller
             return redirect()->back();
 
         }
+        $activeexam = $this->exam->where('status','active')->first();
+        if(!$activeexam){
+            \Session::flash('error','Please Finalize Currently Active Exam First');
+            return redirect()->back();
+        }
         foreach($request->finalqn as $key=>$question){
             $relation = new Relation();
             $relation['question_id'] = $question;
-            $relation['exam_id']= $request->exam_id;
-            $relation['subject_id'] = $request->subject_id;
+            $relation['exam_id']= $activeexam->id;
+            $relation['sub_id'] = $request->subject_id;
              $succ = $relation->save();
         }
 

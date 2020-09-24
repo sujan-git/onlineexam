@@ -36,6 +36,25 @@
                       </ul>
                     </div>
                   @endif
+                  @if(Session::has('success'))
+                    <div class="alert alert-success" >
+                      <p>{{Session::get('success')}} 
+                      <button type="button" class="close" aria-label="Close">
+                        <span aria-hidden="true" id="close">&times;</span>
+                       
+                      </button>
+                      </p>
+                      
+                    </div>
+                   @endif
+                    @if(Session::has('error'))
+                    <div class="alert alert-danger" >
+                      <button type="button" class="close" aria-label="Close">
+                          <span aria-hidden="true" id="close">{{Session::get('error')}} &times;</span>
+                      </button>
+                      
+                    </div>
+                   @endif
                   <div id="formresponse">
                     <span id="msg-db"></span>
                   </div>
@@ -90,10 +109,10 @@
                           </div></br>
                           <input type="text" class="form-control ans" placeholder="Mention Correct Answer Or Option" name="answer[]" list="answer">
                           <datalist id="answer">
-                            <option>Option A</option>
-                            <option>Option B</option>
-                            <option>Option C</option>
-                            <option>Option D</option>
+                            <option value='a'>Option A</option>
+                            <option value='b'>Option B</option>
+                            <option value='c'>Option C</option>
+                            <option value='d'>Option D</option>
                           </datalist>
                           </br><input type="checkbox" name="is_entry[]"  id="entryQn"/> Mark as Entry Type</br>
                           <button type="button" class="btn btn-info" id="addmore">Add More Question</button>

@@ -16,7 +16,7 @@ class CreateActivationsTable extends Migration
         Schema::create('activations', function (Blueprint $table) {
             $table->increments('id');
             $table->string('label');
-            $table->enum('status',['active','inavtive'])->nullable();
+            $table->enum('status',['active','inactive'])->nullable();
             $table->integer('ref_id')->nullable();
             $table->timestamps();
         });

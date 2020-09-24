@@ -106,9 +106,10 @@
                       <li><a href="form_buttons.html">Form Buttons</a></li>
                     </ul>-->
                   </li>
-                  <li><a><i class="fa fa-edit"></i>Control<span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-wrench"></i>Settings<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{{route('activation')}}">Activations</a></li>
+                      <li><a href="{{route('activate.exam')}}">Exam Activations</a></li>
+                      <li><a href="{{route('settings')}}">Controls</a></li>
                       
                     </ul>
                   </li>

@@ -16,7 +16,9 @@ class CreateFinalSubjectsTable extends Migration
         Schema::create('final_subjects', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('sub_id')->unsigned();
+            $table->integer('exam_id')->unsigned();
             $table->foreign('sub_id')->references('id')->on('subjects')->onDelete('cascade');
+            $table->foreign('exam_id')->references('id')->on('exams')->onDelete('cascade');
             $table->timestamps();
         });
     }

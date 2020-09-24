@@ -1,9 +1,6 @@
 @extends('layouts.backend.template')
 @section('page-content')
-<style>a.disabled {
-  pointer-events: none;
-  cursor: default;
-}</style>
+
 <!-- page content -->
         <!-- page content -->
         <div class="right_col" role="main">
@@ -37,7 +34,16 @@
                       </ul>
                     </div>
                   @endif
-                  
+                  @if(Session::has('success'))
+                    <div class="alert alert-success">
+                  		<span>✅✅ {{ Session::get('success') }}</span>
+                  	</div>
+                  	@endif
+                  	@if(Session::has('error'))
+                  	<div class="alert alert-danger">
+                  		<span>{{ Session::get('error') }}</span>
+                  	</div>
+                  	@endif 
                   
                 </div>  
                 <div class="x_panel">
@@ -55,11 +61,11 @@
                   @endif
                   <div class="x_content">
                     <br />
-                    @if(!empty($param))
+                    @if(!empty($activeexam))
                     <table class="table table-hover">
 					  <thead>
 					    <tr>  
-					      <th scope="col">Labbel</th>
+					      <th scope="col">Examination</th>
 					      <th scope="col">Status</th>
 					      <th scope="col">Actions</th>
 					    </tr>
@@ -67,14 +73,13 @@
 					  <tbody>
 					  	
 					    <tr>
-					    @foreach($param as $label)
-					      
-					      <td>{{ucfirst($label->label)}}</td>
-					      <td>{{ucfirst($label->status)}}</td>
-					      <td><a class="btn btn-primary enable" href="{{route('activation.save',[$label->id,'set'])}}" {{@($label->status=='active')?'disabled':''}}>Enable</a>
-					      	<a class="btn btn-warning" href="{{route('activation.save',[$label->id,'unset'])}}" {{@($label->status=='inactive')?'disabled':''}}>Disable</a></td>
+					    
+					      <td>{{ucfirst($activeexam->examname)}}</td>
+					      <td>{{ucfirst($activeexam->status)}}</td>
+					      <td>
+					      	<a class="btn btn-warning" href="{{route('deactivateexam',$activeexam->id)}}">DeActivate</a></td>
 					    </tr>
-					    @endforeach
+					    
 					  </tbody>
 					</table>
 					@else
@@ -94,12 +99,14 @@
     <script src="{{asset('backend/vendors/validator/validator-plugin.js')}}"></script>
     <script>
     	$(document).ready(function(){
-    		$('.enable').on('click',function(e){
-            e.preventDefault();
-            if($(this).prop("disabled")){
-              alert('disabled');
-            }
-        });
+    		$("#exam").hide();
+    		$("#enableExam").on('click', function(){
+    			 if($(this).is(':checked')){
+    			 	$("#exam").show();
+    			 }else{
+    			 	$("#exam").hide();
+    			 }
+    		});
     	});
     </script>
     

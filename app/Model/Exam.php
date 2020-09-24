@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Exam extends Model
 {
-    protected $fillable = ['examname','month','date','year','timeduration','fullmarks','passmarks'];
+    protected $fillable = ['examname','month','date','year','timeduration','fullmarks','passmarks','status'];
 
     public function getRules($fm){
     	return [

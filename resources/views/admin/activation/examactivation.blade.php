@@ -1,9 +1,6 @@
 @extends('layouts.backend.template')
 @section('page-content')
-<style>a.disabled {
-  pointer-events: none;
-  cursor: default;
-}</style>
+
 <!-- page content -->
         <!-- page content -->
         <div class="right_col" role="main">
@@ -23,6 +20,7 @@
             </div>
             <div class="clearfix"></div>
             <div class="row" >
+            		
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="row" id="msg">
                   @if ($errors->any())
@@ -37,49 +35,58 @@
                       </ul>
                     </div>
                   @endif
-                  
-                  
+                  @if(Session::has('success'))
+                    <div class="alert alert-success">
+                  		<span>✅✅ {{ Session::get('success') }}</span>
+                  	</div>
+                  	@endif
+                  	@if(Session::has('error'))
+                  	<div class="alert alert-danger">
+                  		<span>{{ Session::get('error') }}</span>
+                  	</div>
+                  	@endif 
                 </div>  
                 <div class="x_panel">
+
                   <div class="x_title">
-                    <h2>Credentials</h2>
+                    <h2>Select The Credentials To Enable Exam</h2>
+                    
+
+                    
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
                       
                     </ul>
                     <div class="clearfix"></div>
+
                   </div>
-                  @if(Session::has('success'))
-                  <strong><span class="alert alert-info">✅✅ {{ Session::get('success') }}</span></strong></br>
-                  @endif
                   <div class="x_content">
-                    <br />
-                    @if(!empty($param))
-                    <table class="table table-hover">
-					  <thead>
-					    <tr>  
-					      <th scope="col">Labbel</th>
-					      <th scope="col">Status</th>
-					      <th scope="col">Actions</th>
-					    </tr>
-					  </thead>
-					  <tbody>
-					  	
-					    <tr>
-					    @foreach($param as $label)
-					      
-					      <td>{{ucfirst($label->label)}}</td>
-					      <td>{{ucfirst($label->status)}}</td>
-					      <td><a class="btn btn-primary enable" href="{{route('activation.save',[$label->id,'set'])}}" {{@($label->status=='active')?'disabled':''}}>Enable</a>
-					      	<a class="btn btn-warning" href="{{route('activation.save',[$label->id,'unset'])}}" {{@($label->status=='inactive')?'disabled':''}}>Disable</a></td>
-					    </tr>
-					    @endforeach
-					  </tbody>
-					</table>
-					@else
-					<p>Parameter In Database Is Empty</p>
-					@endif
+                    
+                  	
+                    <form method= 'post' action="{{route('activate.exam')}}">
+                    	
+                    	@csrf
+                    	<div class="form-group row">
+                    		<label>Examination</label>
+                    		<select class="form-control" name="exam_id">
+                    			@if($exam != null))
+                    			<option>--Select Exam To Activate--</option>
+                    			@foreach($exam as $exam)
+                    			<option value="{{$exam->id}}">{{$exam->examname}}</option>
+                    			@endforeach
+                    			@endif
+                    		</select>
+                    		
+
+                    	</div>
+                    	
+                    	
+                    	<button type="cancel" class="btn btn-warning">Cancel</button>
+                    		<button type="submit" class="btn btn-primary">Submit</button>
+
+                    </form>
+                	
                   </div>
                 </div>
               </div>
@@ -94,12 +101,10 @@
     <script src="{{asset('backend/vendors/validator/validator-plugin.js')}}"></script>
     <script>
     	$(document).ready(function(){
-    		$('.enable').on('click',function(e){
-            e.preventDefault();
-            if($(this).prop("disabled")){
-              alert('disabled');
-            }
-        });
+    		//$("#exam").hide();
+    		$("#close").on('click', function(){
+    			 $(this).parent().closest('div').hide();
+    		});
     	});
     </script>
     

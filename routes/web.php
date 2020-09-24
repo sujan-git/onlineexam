@@ -31,7 +31,17 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','admin']],function(){
 	Route::post('/registration/verify','RegistrationController@verify')->name('register.verify');
 	Route::get('/registration/check/{id}','RegistrationController@checkDetails')->name('register.check');
 	Route::get('/activations/','OnlineExam\ActivationController@index')->name('activation');
-	Route::post('/activations/save','OnlineExam\ActivationController@save')->name('activation.save');
+	
+	Route::get('/activation/exam','OnlineExam\ActivationController@examActivationForm')->name('activate.exam');
+	Route::post('/activation/exam','OnlineExam\ActivationController@activateExam')->name('activate.exam');
+	Route::get('/active/list','OnlineExam\ActivationController@getActiveExamList')->name('activeexam.list');
+	Route::get('/deactivate/exam/{id}','OnlineExam\ActivationController@deactivateExam')->name('deactivateexam');
+	Route::get('/settings' ,'OnlineExam\ActivationController@settings')->name('settings');
+	Route::get('/settings/{id}/{en}','OnlineExam\ActivationController@saveSettings')->name('activation.save');
+			
+		
+
+
 
 });
 
@@ -65,5 +75,10 @@ Route::any('/register/edit','RegistrationController@edit')->name('register.edit'
 Route::any('/register/update','RegistrationController@add')->name('register.update');
 
 Route::get('/exam/day/', 'OnlineExam\QuestionController@getFinalQuestionForExam');
-Route::get('/my/exam', 'OnlineExam\FrontendController@examView');
+Route::get('/my/exam', 'OnlineExam\FrontendController@studentLogin');
+Route::post('/my/exam', 'OnlineExam\FrontendController@verifyStudentLogin')->name('stdnt.login');
 /*-------------------Frontend Routes---------------------*/
+
+/*Result Routes*/
+	Route::post('/result','OnlineExam\ResultController@saveResult')->name('result.save');
+	/*Result Routes*/

@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class FinalSubject extends Model
 {
-    protected $fillable = ['sub_id'];
+    protected $fillable = ['sub_id','exam_id'];
 }

@@ -70,14 +70,7 @@
                       
                       <input type="hidden" value = "{{@$subject_id}}" name="subject_id">
                       
-                  		<label for="examtitle">Select Exam</label>
-                  		<select class="form-control" name="exam_id" id="examtitle">
-                  			@if($exam)
-                  			@foreach($exam as $exam)
-                  			<option value="{{$exam->id}}" class="form-control">{{$exam->examname}}</option>
-                  			@endforeach
-                  				@endif
-                  		</select>
+                  		
                   	<table class="table table-hover table-dark">
 					  
 					    
